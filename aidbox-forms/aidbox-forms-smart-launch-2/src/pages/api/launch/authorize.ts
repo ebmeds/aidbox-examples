@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSmartApi } from "@/lib/server/smart";
 import { SMART_LAUNCH_CLIENT_ID, SMART_LAUNCH_SCOPES } from "@/lib/constants";
-import { logError } from "@/lib/utils";
+import { logError } from "@/lib/server/utils";
 
 export default async function handler(
   req: NextApiRequest,

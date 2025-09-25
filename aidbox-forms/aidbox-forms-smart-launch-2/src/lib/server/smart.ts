@@ -17,7 +17,7 @@ import { createRedis } from "@/lib/server/redis";
 import { getOrganizationalAidbox } from "@/lib/server/aidbox";
 import Redis from "ioredis";
 import { redirect } from "next/navigation";
-import { logError } from "../utils";
+import { logError } from "@/lib/server/utils";
 
 interface SmartSession {
   [SMART_KEY]: string | undefined;
