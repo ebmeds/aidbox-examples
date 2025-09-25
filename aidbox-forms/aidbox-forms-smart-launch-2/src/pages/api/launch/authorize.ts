@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSmartApi } from "@/lib/server/smart";
 import { SMART_LAUNCH_CLIENT_ID, SMART_LAUNCH_SCOPES } from "@/lib/constants";
+import { logError } from "@/lib/utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,6 +31,7 @@ export default async function handler(
       scope: SMART_LAUNCH_SCOPES.join(" "),
     });
   } catch (e) {
+    logError(e, 'authorize-service');
     res.status(400).json({
       error: `Failed to authorize: ${(e as { message?: string })?.message || "Unknown error"}`,
     });

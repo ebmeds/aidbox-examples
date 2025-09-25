@@ -17,6 +17,7 @@ import { createRedis } from "@/lib/server/redis";
 import { getOrganizationalAidbox } from "@/lib/server/aidbox";
 import Redis from "ioredis";
 import { redirect } from "next/navigation";
+import { logError } from "../utils";
 
 interface SmartSession {
   [SMART_KEY]: string | undefined;
@@ -145,8 +146,13 @@ export const getCurrentClient = cache(async () => {
 
 export const getCurrentPatient = cache(async () => {
   const client = await getCurrentClient();
-  const patient = await client.patient.read();
-  return patient as Patient;
+  try {
+    const patient = await client.patient.read();
+    return patient as Patient;
+  } catch (e) {
+    logError(e, 'get-current-patient-service');
+    throw new Error("Failed to fetch patient");
+  }
 });
 
 export const getCurrentUser = cache(async () => {

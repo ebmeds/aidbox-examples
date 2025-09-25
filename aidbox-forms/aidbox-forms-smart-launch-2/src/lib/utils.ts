@@ -3,6 +3,10 @@ import { twMerge } from "tailwind-merge";
 import { Address, Bundle, HumanName, Resource } from "fhir/r4";
 import crypto from "crypto";
 import { SMART_LAUNCH_TYPES } from "@/lib/constants";
+const { Logging } = require('@google-cloud/logging');
+const logging = new Logging();
+const log = logging.log('aidbox-smart-app');
+const metadata = { resource: { type: 'cloud_run_revision' } };
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -134,4 +138,32 @@ export function ago(time: Date): string {
   } else {
     return formatter.format(-daysElapsed, "day");
   }
+}
+
+export async function logError(err: unknown, service = "default-service") {
+  let errorMessage: string;
+  let errorStack: string | undefined;
+
+  if (err instanceof Error) {
+    errorMessage = err.message;
+    errorStack = err.stack;
+  } else if (typeof err === 'string') {
+    errorMessage = err;
+  } else {
+    try {
+      errorMessage = JSON.stringify(err);
+    } catch {
+      errorMessage = String(err);
+    }
+  }
+
+  const entry = log.entry(metadata, {
+    severity: 'ERROR',
+    message: errorMessage,
+    stack: errorStack,
+    service,
+  });
+
+  await log.write(entry);
+  console.log('Logged error to Cloud Logging');
 }
