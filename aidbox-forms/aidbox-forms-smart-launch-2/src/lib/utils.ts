@@ -79,6 +79,7 @@ export function createSmartAppLauncherUrl({
     "launch",
     btoa(JSON.stringify([SMART_LAUNCH_TYPES.indexOf(launchType)])),
   );
+  params.set("redirect_uri", window.location.origin + "/api/launch/ready");
 
   return `https://launch.smarthealthit.org/?${params.toString()}`;
 }
