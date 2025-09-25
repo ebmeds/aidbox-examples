@@ -1,7 +1,7 @@
 import { DEFAULT_PAGE_SIZE, PAGE_SIZES } from "@/lib/constants";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
-const { Logging } = require('@google-cloud/logging');
+import { Logging } from "@google-cloud/logging"
 const logging = new Logging();
 const log = logging.log('aidbox-smart-app');
 const metadata = { resource: { type: 'cloud_run_revision' } };
