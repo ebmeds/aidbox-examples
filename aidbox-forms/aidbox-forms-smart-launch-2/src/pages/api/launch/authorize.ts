@@ -20,14 +20,14 @@ export default async function handler(
       return await smart.authorize({
         iss: issuer,
         clientId: SMART_LAUNCH_CLIENT_ID,
-        redirectUri: "/api/launch/ready",
+        redirectUri: `${process.env.AIDBOX_SMART_APP_BASE_URL}/api/launch/ready`,
         scope: scope.replace(/\s+/g, " "),
       });
     }
 
     return await smart.authorize({
       clientId: SMART_LAUNCH_CLIENT_ID,
-      redirectUri: "/api/launch/ready",
+      redirectUri: `${process.env.AIDBOX_SMART_APP_BASE_URL}/api/launch/ready`,
       scope: SMART_LAUNCH_SCOPES.join(" "),
     });
   } catch (e) {
