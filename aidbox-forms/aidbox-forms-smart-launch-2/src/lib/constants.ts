@@ -20,7 +20,7 @@ export const SMART_LAUNCH_SCOPES = [
   "user/*.rs",
 ];
 
-export const SMART_LAUNCH_CLIENT_ID = "aidbox-forms";
+export const SMART_LAUNCH_CLIENT_ID = process.env.SMART_LAUNCH_CLIENT_ID ?? "aidbox-forms";
 
 export const SMART_LAUNCH_TYPES = [
   "provider-ehr",
