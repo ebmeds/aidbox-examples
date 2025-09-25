@@ -28,7 +28,7 @@ export async function decidePageSize(pageSize: string | undefined) {
 export async function logError(err: unknown, service = "default-service") {
   let errorMessage: string;
   let errorStack: string | undefined;
-
+  console.error(`[${service}]`, err);
   if (err instanceof Error) {
     errorMessage = err.message;
     errorStack = err.stack;

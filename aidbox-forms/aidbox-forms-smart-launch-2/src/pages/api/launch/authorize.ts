@@ -12,7 +12,7 @@ export default async function handler(
   try {
     if (req.method === "POST") {
       const { scope, issuer } = req.body as { scope: string; issuer: string };
-
+      console.info(req.body)
       if (!scope || !issuer) {
         return res.status(400).send("Invalid request");
       }
