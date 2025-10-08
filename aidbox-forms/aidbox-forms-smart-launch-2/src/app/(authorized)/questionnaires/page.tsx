@@ -114,9 +114,7 @@ export default async function QuestionnairesPage({ searchParams }: PageProps) {
     // Encounters are created due to errors in references
     const author = await getCurrentUser().catch(() => null);
 
-    const result = await aidbox
-      .post(`fhir/Questionnaire/$populate`, {
-        json: {
+    const jsonBody = {
           resourceType: "Parameters",
           parameter: [
             {
@@ -145,9 +143,24 @@ export default async function QuestionnairesPage({ searchParams }: PageProps) {
               ],
             },
           ],
-        },
+      }
+    const result = await aidbox
+      .post(`fhir/Questionnaire/$populate`, { json: jsonBody })
+      .then(res => {
+        console.log('🚀 ~ createQuestionnaireResponse ~ res:', res.text())
+        return res.json() as Promise<Parameters>;
       })
-      .json<Parameters>();
+      .catch((e) => {
+        console.error(
+          `Failed to populate QuestionnaireResponse: ${e.message}`,
+        );
+        throw e;
+      });
+      
+    if (!result.parameter) {
+      throw new Error("Failed to populate QuestionnaireResponse");
+    }
+
 
     const populated = result.parameter?.find(({ name }) => name === "response")
       ?.resource as QuestionnaireResponse;

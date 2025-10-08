@@ -157,7 +157,7 @@ export async function sync(client: Client) {
     resources.push(...everything);
   }
 
-  await upsertOrganization(await getCapabilityStatement(client));
+  upsertOrganization(await getCapabilityStatement(client));
   const aidbox = await getOrganizationalAidbox(client.state.serverUrl);
 
   const bundle = {
@@ -172,7 +172,7 @@ export async function sync(client: Client) {
     })),
   };
 
-  await aidbox.post("fhir/", { json: bundle }).catch(async (e) => {
+  aidbox.post("fhir/", { json: bundle }).catch(async (e) => {
     console.error(`Failed to post bundle to Aidbox: ${e.message}`);
     console.dir(bundle, { depth: null });
 

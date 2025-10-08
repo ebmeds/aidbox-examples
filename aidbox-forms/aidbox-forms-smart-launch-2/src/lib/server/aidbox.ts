@@ -7,11 +7,7 @@ import { cache } from "react";
 export const aidbox = ky.extend({
   prefixUrl: process.env.AIDBOX_BASE_URL,
   headers: {
-    Authorization:
-      "Basic " +
-      btoa(
-        `${process.env.AIDBOX_CLIENT_ID}:${process.env.AIDBOX_CLIENT_SECRET}`,
-      ),
+    Authorization: `Bearer ${process.env.AIDBOX_API_KEY}`,
   },
 });
 
@@ -48,7 +44,11 @@ export const upsertOrganization = async (
         ],
       },
     })
-    .json<Organization>();
+    .json<Organization>()
+    .catch((e) => {
+      console.error(`Failed to upsert organization: ${e.message}`);
+      throw e;
+    });
 };
 
 export const getOrganizationalAidbox = cache(async (serverUrl: string) => {
