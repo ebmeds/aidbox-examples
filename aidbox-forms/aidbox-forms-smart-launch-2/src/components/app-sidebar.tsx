@@ -12,7 +12,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { PatientCard } from "@/components/patient-card";
 import { AppMenu } from "@/components/app-menu";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -45,7 +44,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <AppMenu />
       </SidebarContent>
       <SidebarFooter>
-        <PatientCard />
+        {/* <PatientCard /> */}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

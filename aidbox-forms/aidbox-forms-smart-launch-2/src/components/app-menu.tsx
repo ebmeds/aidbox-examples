@@ -40,21 +40,21 @@ const data: {
 }[] = [
   {
     children: [
-      {
-        title: "Dashboard",
-        href: "/dashboard",
-        icon: LayoutDashboard,
-      },
-      {
-        title: "Patients",
-        href: "/patients",
-        icon: Users,
-      },
-      {
-        title: "Practitioners",
-        href: "/practitioners",
-        icon: UserCog,
-      },
+      // {
+      //   title: "Dashboard",
+      //   href: "/dashboard",
+      //   icon: LayoutDashboard,
+      // },
+      // {
+      //   title: "Patients",
+      //   href: "/patients",
+      //   icon: Users,
+      // },
+      // {
+      //   title: "Practitioners",
+      //   href: "/practitioners",
+      //   icon: UserCog,
+      // },
       {
         title: "Questionnaires",
         href: "/questionnaires",
@@ -65,18 +65,24 @@ const data: {
         href: "/questionnaire-responses",
         icon: SquareMenu,
       },
-    ],
-  },
-  {
-    label: "Public Library",
-    children: [
       {
-        title: "Questionnaires",
-        href: "/public-library/questionnaires",
-        icon: Library,
+        title: "Activity Definitions",
+        href: "/activity-definitions",
+        icon: LayoutDashboard,
       },
+      
     ],
   },
+    // {
+    //   label: "Public Library",
+    //   children: [
+    //     {
+    //       title: "Questionnaires",
+    //       href: "/public-library/questionnaires",
+    //       icon: Library,
+    //     },
+    //   ],
+    // },
 ];
 
 export function AppMenu() {

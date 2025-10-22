@@ -12,5 +12,5 @@ export default async function handler(
   const resources = await sync(client);
   await saveSyncStats(resources, req, res);
 
-  res.redirect(302, "/dashboard");
+  res.redirect(302, "/questionnaires");
 }

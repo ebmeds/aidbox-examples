@@ -1,10 +1,10 @@
-import ky from "ky";
+import got from "got";
 import { CapabilityStatement, Organization } from "fhir/r4";
 import { sha256 } from "@/lib/utils";
 import assert from "node:assert";
 import { cache } from "react";
 
-export const aidbox = ky.extend({
+export const aidbox = got.extend({
   prefixUrl: process.env.AIDBOX_BASE_URL,
   headers: {
     Authorization: `Bearer ${process.env.AIDBOX_API_KEY}`,
@@ -58,20 +58,17 @@ export const getOrganizationalAidbox = cache(async (serverUrl: string) => {
     prefixUrl: `${process.env.AIDBOX_BASE_URL}/Organization/${id}`,
     hooks: {
       afterResponse: [
-        async (request, options, response) => {
-          console.log(`[aidbox]`, request.method, request.url);
-          console.log(
-            "[aidbox]",
-            response.status,
-            response.headers.get("content-type"),
-          );
-          console.dir(
-            await response
-              .clone()
-              .json()
-              .catch(() => null),
-            { depth: 1000 },
-          );
+        async response => {
+          
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            console.log(
+              "[aidbox]",
+              response.statusCode,
+              response.headers["content-type"]
+            );
+          }
+          
+          return response
         },
       ],
     },

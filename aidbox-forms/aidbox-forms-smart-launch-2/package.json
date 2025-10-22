@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "cookies-next": "^5.0.2",
     "fhirclient": "^2.5.4",
+    "got": "^14.6.0",
     "ioredis": "^5.4.1",
     "iron-session": "^8.0.4",
     "ky": "^1.7.2",
