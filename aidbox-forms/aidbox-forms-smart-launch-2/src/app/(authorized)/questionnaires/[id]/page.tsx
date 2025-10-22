@@ -42,11 +42,11 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
     }
   }
 
-  async function globalProxy(url: string, init: RequestInit) {
+  async function globalProxy(url: string, _: RequestInit) {
     "use server";
 
     try {
-      return await globalAidbox(url.replace(/^\//, ""), init).json<any>();
+      return await globalAidbox(url.replace(/^\//, "")).json<any>();
     } catch (error) {
       if (error instanceof HTTPError) {
         console.dir(await error.response.json(), { depth: 1000 });
@@ -55,12 +55,12 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
     }
   }
 
-  async function currentProxy(url: string, init: RequestInit) {
+  async function currentProxy(url: string, _: RequestInit) {
     "use server";
 
     try {
       const currentAidbox = await getCurrentAidbox();
-      return await currentAidbox(url.replace(/^\//, ""), init).json<any>();
+      return await currentAidbox(url.replace(/^\//, "")).json<any>();
     } catch (error) {
       if (error instanceof HTTPError) {
         console.dir(await error.response.json(), { depth: 1000 });

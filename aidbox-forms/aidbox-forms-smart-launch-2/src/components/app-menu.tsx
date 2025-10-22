@@ -4,11 +4,8 @@ import * as React from "react";
 import {
   FileQuestion,
   LayoutDashboard,
-  Library,
   LucideIcon,
   SquareMenu,
-  UserCog,
-  Users,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 

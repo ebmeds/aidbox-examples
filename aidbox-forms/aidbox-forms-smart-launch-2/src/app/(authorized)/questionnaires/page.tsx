@@ -146,16 +146,7 @@ export default async function QuestionnairesPage({ searchParams }: PageProps) {
       }
     const result = await aidbox
       .post(`fhir/Questionnaire/$populate`, { json: jsonBody })
-      .then(res => {
-        console.log('🚀 ~ createQuestionnaireResponse ~ res:', res.text())
-        return res.json() as Promise<Parameters>;
-      })
-      .catch((e) => {
-        console.error(
-          `Failed to populate QuestionnaireResponse: ${e.message}`,
-        );
-        throw e;
-      });
+      .json<Parameters>();
       
     if (!result.parameter) {
       throw new Error("Failed to populate QuestionnaireResponse");

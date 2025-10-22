@@ -10,9 +10,11 @@ import {
 import { PageHeader } from "@/components/page-header";
 import { PageSizeSelect } from "@/components/page-size-select";
 import { Pager } from "@/components/pager";
-import { Bundle } from "fhir/r4";
+import { Bundle, ActivityDefinition } from "fhir/r4";
 import { isDefined } from "@/lib/utils";
 import { decidePageSize } from "@/lib/server/utils";
+import Markdown from 'react-markdown'
+
 
 interface PageProps {
   searchParams: Promise<{
@@ -37,7 +39,7 @@ export default async function PractitionersPage({ searchParams }: PageProps) {
         _page: page,
       },
     })
-    .json<Bundle<any>>();
+    .json<Bundle<ActivityDefinition>>();
 
   const resources =
     response.entry?.map((entry) => entry.resource)?.filter(isDefined) || [];
@@ -69,10 +71,10 @@ export default async function PractitionersPage({ searchParams }: PageProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {resources.map((resource) => (
+              {resources.filter(({ topic }) => topic).map((resource) => (
                 <TableRow key={resource.id}>
                   <TableCell className="pl-6">{resource.id}</TableCell>
-                  <TableCell className="pl-6">{resource.topic[0]?.text}</TableCell>
+                  <TableCell className="pl-6"><Markdown>{resource.topic ? resource.topic[0].text : 'No topic'}</Markdown></TableCell>
                 </TableRow>
               ))}
               {!resources.length && (
@@ -89,12 +91,11 @@ export default async function PractitionersPage({ searchParams }: PageProps) {
         <div className="flex items-center justify-between space-x-2 py-4">
           <div className="flex items-center gap-4">
             {total ? (
-              <div className="text-sm text-muted-foreground">{`Showing ${
-                (page - 1) * pageSize + 1
-              }-${Math.min(
-                page * pageSize,
-                total,
-              )} of ${total} practitioners`}</div>
+              <div className="text-sm text-muted-foreground">{`Showing ${(page - 1) * pageSize + 1
+                }-${Math.min(
+                  page * pageSize,
+                  total,
+                )} of ${total} practitioners`}</div>
             ) : null}
             <PageSizeSelect currentSize={pageSize} />
           </div>
