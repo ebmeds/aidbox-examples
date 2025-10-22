@@ -43,6 +43,7 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
   }
 
   async function globalProxy(url: string, _: RequestInit) {
+    console.log('🚀 ~ globalProxy ~ _:', _)
     "use server";
 
     try {
@@ -56,6 +57,7 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
   }
 
   async function currentProxy(url: string, _: RequestInit) {
+    console.log('🚀 ~ currentProxy ~ _:', _)
     "use server";
 
     try {
