@@ -43,8 +43,8 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
   }
 
   async function globalProxy(url: string, _: RequestInit) {
-    console.log('🚀 ~ globalProxy ~ _:', _)
     "use server";
+    console.log('🚀 ~ globalProxy ~ _:', _)
 
     try {
       return await globalAidbox(url.replace(/^\//, "")).json<any>();
@@ -57,8 +57,8 @@ export default async function EditQuestionnairePage({ params }: PageProps) {
   }
 
   async function currentProxy(url: string, _: RequestInit) {
-    console.log('🚀 ~ currentProxy ~ _:', _)
     "use server";
+    console.log('🚀 ~ currentProxy ~ _:', _)
 
     try {
       const currentAidbox = await getCurrentAidbox();
