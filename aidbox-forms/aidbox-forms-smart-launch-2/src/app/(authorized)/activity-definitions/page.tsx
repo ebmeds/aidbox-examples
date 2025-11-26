@@ -43,6 +43,11 @@ export default async function PractitionersPage({ searchParams }: PageProps) {
 
   const resources =
     response.entry?.map((entry) => entry.resource)?.filter(isDefined) || [];
+  console.log('🚀 ~ PractitionersPage ~ resources:', resources)
+  
+  const tasks = resources.filter(({ kind }) => kind === 'Task')
+  console.log('🚀 ~ PractitionersPage ~ tasks:', tasks)
+  const others = resources.filter(({ kind }) => !kind)
 
   const total = response.total || 0;
   const totalPages = Math.ceil(total / pageSize);
@@ -71,9 +76,37 @@ export default async function PractitionersPage({ searchParams }: PageProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {resources.filter(({ topic }) => topic).map((resource) => (
+              {others.filter(({ topic }) => topic).map((resource) => (
                 <TableRow key={resource.id}>
                   <TableCell className="pl-6">{resource.id}</TableCell>
+                  <TableCell className="pl-6"><Markdown>{resource.topic ? resource.topic[0].text : 'No topic'}</Markdown></TableCell>
+                </TableRow>
+              ))}
+              {!resources.length && (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-4">
+                    No activity definitions found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <br />
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="pl-6">Koodi</TableHead>
+                <TableHead className="pl-6">Teksti</TableHead>
+                <TableHead>Topic</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tasks.map((resource) => (
+                <TableRow key={resource.id}>
+                  <TableCell className="pl-6">{resource.code?.coding?.at(0)?.display}</TableCell>
+                  <TableCell className="pl-6">{resource.code?.coding?.at(0)?.code}</TableCell>
                   <TableCell className="pl-6"><Markdown>{resource.topic ? resource.topic[0].text : 'No topic'}</Markdown></TableCell>
                 </TableRow>
               ))}

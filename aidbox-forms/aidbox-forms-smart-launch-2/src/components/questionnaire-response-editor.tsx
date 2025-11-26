@@ -12,12 +12,16 @@ interface QuestionnaireResponseEditorProps {
   onSaveAction: (
     questionnaireResponse: QuestionnaireResponse,
   ) => Promise<QuestionnaireResponse>;
+  onSubmitAction: (
+    questionnaireResponse: QuestionnaireResponse,
+  ) => Promise<QuestionnaireResponse>;
 }
 
 export function QuestionnaireResponseEditor({
   questionnaire,
   questionnaireResponse,
   onSaveAction,
+  onSubmitAction,
 }: QuestionnaireResponseEditorProps) {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -39,7 +43,7 @@ export function QuestionnaireResponseEditor({
         onSubmit={(updatedQuestionnaireResponse) => {
           startTransition(async () => {
             try {
-              await onSaveAction(updatedQuestionnaireResponse);
+              await onSubmitAction(updatedQuestionnaireResponse);
               router.push(`/questionnaire-responses`);
             } catch (error) {
               console.error("Failed to submit questionnaire response:", error);

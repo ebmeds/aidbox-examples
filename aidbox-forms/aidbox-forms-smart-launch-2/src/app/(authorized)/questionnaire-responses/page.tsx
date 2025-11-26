@@ -129,19 +129,18 @@ export default async function QuestionnaireResponsesPage({
     "use server";
     const aidbox = await getCurrentAidbox();
     const resource = await aidbox.get<QuestionnaireResponse>(`fhir/QuestionnaireResponse/${id}`).json() as QuestionnaireResponse;
-    console.log('🚀 ~ getPlatfromResponse ~ resource:', resource)
-    const questionnaireCompletedBody ={
-    hook: "questionnaire-completed",
-    prefetch: {
+    const questionnaireCompletedBody = {
+      hook: "questionnaire-completed",
+      prefetch: {
         questionnaireResponse: {
-            resource: {
-              ...resource,
-              status: "completed"
-            }
+          resource: {
+            ...resource,
+            status: "completed"
+          }
         }
+      }
     }
-} 
-    const response = await got.post('https://questionnaires-services-333859734859.europe-north1.run.app/api/v1/cds-services/filled-questionnaire',{
+    const response = await got.post('https://questionnaires-services-333859734859.europe-north1.run.app/api/v1/cds-services/filled-questionnaire', {
       json: questionnaireCompletedBody,
       headers: {
         'Content-Type': 'application/json',
@@ -153,15 +152,19 @@ export default async function QuestionnaireResponsesPage({
 
 
     if (response) {
-          response.cards[0].suggestions.forEach(async (activityDefinition: ActivityDefinition) => {
-              const res = await aidbox.post(`fhir/ActivityDefinition`, { json: {
-                ...activityDefinition,
-                kind: 'Task '
-              } })
-              console.log('🚀 ~ getPlatfromResponse ~ res:', res)
-          })
-      }
-    
+      response.cards[0].suggestions.forEach(async (activityDefinition: ActivityDefinition) => {
+        const res = await aidbox.post(`fhir/ActivityDefinition`, {
+          json: {
+            ...activityDefinition,
+            kind: 'Task'
+          }
+        }).json().catch((error) => {
+          console.error('Error creating ActivityDefinition:', error);
+          throw error;
+        })
+      })
+    }
+
   }
 
   return (
@@ -234,12 +237,11 @@ export default async function QuestionnaireResponsesPage({
         <div className="flex items-center justify-between space-x-2 py-4">
           <div className="flex items-center gap-4">
             {total ? (
-              <div className="text-sm text-muted-foreground">{`Showing ${
-                (page - 1) * pageSize + 1
-              }-${Math.min(
-                page * pageSize,
-                total,
-              )} of ${total} practitioners`}</div>
+              <div className="text-sm text-muted-foreground">{`Showing ${(page - 1) * pageSize + 1
+                }-${Math.min(
+                  page * pageSize,
+                  total,
+                )} of ${total} practitioners`}</div>
             ) : null}
             <PageSizeSelect currentSize={pageSize} />
           </div>

@@ -47,6 +47,25 @@ export default async function EditQuestionnaireResponsePage({
       })
       .json<QuestionnaireResponse>();
   }
+  async function submitQuestionnaireResponse(
+    questionnaireResponse: QuestionnaireResponse,
+  ) {
+    "use server";
+
+    const aidbox = await getCurrentAidbox();
+    const json = {
+      resourceType: "Parameters",
+      parameter: [{
+        name: "response",
+        resource: questionnaireResponse,
+      }]
+    }
+    console.log('🚀 ~ submitQuestionnaireResponse ~ json:', JSON.stringify(json))
+
+    return aidbox
+      .put(`fhir/QuestionnaireResponse/$submit`, { json })
+      .json<QuestionnaireResponse>();
+  }
 
   return (
     <>
@@ -64,6 +83,7 @@ export default async function EditQuestionnaireResponsePage({
         questionnaire={questionnaire}
         questionnaireResponse={questionnaireResponse}
         onSaveAction={saveQuestionnaireResponse}
+        onSubmitAction={submitQuestionnaireResponse}
       />
     </>
   );
