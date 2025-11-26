@@ -104,8 +104,8 @@ export default function Page() {
 
       <div className="flex flex-col items-center gap-8 max-w-[24rem] mx-auto">
         <Image
-          src={"/health-samurai.svg"}
-          alt={"Health Samurai"}
+          src={"/Kustannus_Duodecim_logo_center_white_RGB.svg"}
+          alt={"Kustannus Duodecim Logo"}
           width={64}
           height={64}
         />

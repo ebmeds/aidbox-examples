@@ -189,7 +189,12 @@ export default async function QuestionnairesPage({ searchParams }: PageProps) {
                 className="pl-8"
               />
             </div>
-            <Button type="submit">Search</Button>
+            <Button 
+              type="submit"
+              // className="bg-[rgb(0,20,87)] text-white hover:opacity-95"
+            >
+              Search
+            </Button>
             {title && (
               <Button variant="ghost" asChild>
                 <Link href="/questionnaires">Clear</Link>

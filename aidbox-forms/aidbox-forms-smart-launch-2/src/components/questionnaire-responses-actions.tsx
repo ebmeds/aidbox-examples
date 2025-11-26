@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Copy, Edit, Eye, MoreHorizontal, Trash2 } from "lucide-react";
+import { Copy, Edit, Eye, MoreHorizontal, Trash2, Zap } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useState } from "react";
 import {
@@ -27,12 +27,16 @@ export function QuestionnaireResponsesActions({
   questionnaireResponse,
   questionnaire,
   onDeleteAction,
+  onSendToPlatform,
 }: {
   questionnaireResponse: QuestionnaireResponse;
   questionnaire?: Questionnaire;
   onDeleteAction?: (
     questionnaireResponse: QuestionnaireResponse,
   ) => Promise<void>;
+  onSendToPlatform?: (
+    id: QuestionnaireResponse['id'],
+  ) => Promise<any>;
 }) {
   const [viewing, setViewing] = useState(false);
   const { toast } = useToast();
@@ -57,6 +61,26 @@ export function QuestionnaireResponsesActions({
             <Copy />
             Copy ID
           </DropdownMenuItem>
+          { questionnaireResponse.id &&
+          <DropdownMenuItem
+            onClick={async () => {
+              if (onSendToPlatform && questionnaireResponse.id) {
+                
+                await onSendToPlatform(questionnaireResponse.id);
+
+                toast({
+                  title: "Succesfuö deleted",
+                  description: `Questionnaire deleted successfully`,
+                });
+              }
+            }
+            }
+          >
+            
+            <Zap />
+            Send to platform
+          </DropdownMenuItem>
+      }
           <DropdownMenuSeparator />
 
           {questionnaire && (

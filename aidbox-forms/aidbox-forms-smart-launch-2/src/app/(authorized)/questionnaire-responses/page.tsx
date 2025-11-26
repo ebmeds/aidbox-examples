@@ -1,3 +1,4 @@
+import { got } from "got";
 import { getCurrentAidbox } from "@/lib/server/smart";
 import {
   Table,
@@ -11,6 +12,7 @@ import { PageHeader } from "@/components/page-header";
 import { PageSizeSelect } from "@/components/page-size-select";
 import { Pager } from "@/components/pager";
 import {
+  ActivityDefinition,
   Bundle,
   Patient,
   Practitioner,
@@ -26,6 +28,7 @@ import {
 import { decidePageSize } from "@/lib/server/utils";
 import { revalidatePath } from "next/cache";
 import { QuestionnaireResponsesActions } from "@/components/questionnaire-responses-actions";
+import { Dialog } from "@/components/ui/dialog";
 
 interface PageProps {
   searchParams: Promise<{
@@ -122,12 +125,51 @@ export default async function QuestionnaireResponsesPage({
     await aidbox.delete(`fhir/QuestionnaireResponse/${id}`).json();
     revalidatePath("/questionnaire-responses");
   }
+  async function getPlatfromResponse(id: string): Promise<any> {
+    "use server";
+    const aidbox = await getCurrentAidbox();
+    const resource = await aidbox.get<QuestionnaireResponse>(`fhir/QuestionnaireResponse/${id}`).json() as QuestionnaireResponse;
+    console.log('🚀 ~ getPlatfromResponse ~ resource:', resource)
+    const questionnaireCompletedBody ={
+    hook: "questionnaire-completed",
+    prefetch: {
+        questionnaireResponse: {
+            resource: {
+              ...resource,
+              status: "completed"
+            }
+        }
+    }
+} 
+    const response = await got.post('https://questionnaires-services-333859734859.europe-north1.run.app/api/v1/cds-services/filled-questionnaire',{
+      json: questionnaireCompletedBody,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).json().catch((error) => {
+      console.error('Error sending to platform:', error);
+      throw error;
+    }) as any
+
+
+    if (response) {
+          response.cards[0].suggestions.forEach(async (activityDefinition: ActivityDefinition) => {
+              const res = await aidbox.post(`fhir/ActivityDefinition`, { json: {
+                ...activityDefinition,
+                kind: 'Task '
+              } })
+              console.log('🚀 ~ getPlatfromResponse ~ res:', res)
+          })
+      }
+    
+  }
 
   return (
     <>
       <PageHeader
         items={[{ href: "/", label: "Home" }, { label: "Questionnaires" }]}
       />
+      <Dialog></Dialog>
       <div className="flex-1 p-6">
         <div className="rounded-md border">
           <Table>
@@ -172,6 +214,7 @@ export default async function QuestionnaireResponsesPage({
                         questionnaire={questionnaire}
                         questionnaireResponse={resource}
                         onDeleteAction={deleteQuestionnaireResponse}
+                        onSendToPlatform={getPlatfromResponse}
                       />
                     </TableCell>
                   </TableRow>
