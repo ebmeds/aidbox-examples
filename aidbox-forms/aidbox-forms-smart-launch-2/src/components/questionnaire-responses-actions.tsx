@@ -35,7 +35,7 @@ export function QuestionnaireResponsesActions({
     questionnaireResponse: QuestionnaireResponse,
   ) => Promise<void>;
   onSendToPlatform?: (
-    id: QuestionnaireResponse['id'],
+    id: string,
   ) => Promise<any>;
 }) {
   const [viewing, setViewing] = useState(false);
