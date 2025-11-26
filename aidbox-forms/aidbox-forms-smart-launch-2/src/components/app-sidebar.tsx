@@ -7,11 +7,9 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
 import { AppMenu } from "@/components/app-menu";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
