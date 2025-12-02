@@ -86,7 +86,7 @@ export function QuestionnaireResponseEditor({
                         ))}
                     </p>
                     {/* button */}
-                    <Button className="mt-4 b-4 px-4 rounded-full flex items-center gap-2 text-sm font-bold border transition">Tallenna tulokset</Button>
+                    {result.length > 0 && <Button className="mt-4 b-4 px-4 rounded-full flex items-center gap-2 text-sm font-bold border transition">Tallenna tulokset</Button>}
                 </div>
             </div>
         </div>
