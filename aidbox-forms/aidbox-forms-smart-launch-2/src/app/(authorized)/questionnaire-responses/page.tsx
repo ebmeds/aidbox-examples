@@ -162,6 +162,7 @@ export default async function QuestionnaireResponsesPage({
           console.error('Error creating ActivityDefinition:', error);
           throw error;
         })
+        console.log('🚀 ~ getPlatfromResponse ~ res:', res)
       })
     }
 
