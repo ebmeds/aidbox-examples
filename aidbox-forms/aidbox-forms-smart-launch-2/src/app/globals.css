@@ -80,6 +80,7 @@
 @layer base {
   * {
     @apply border-border;
+    
   }
 
   body {
@@ -95,6 +96,10 @@
   /* Change color on hover if needed */
   a:hover {
     color: hsl(var(--primary));
+  }
+  p {
+    font-family: Open Sans, sans-serif;
+    color: black
   }
 }
 

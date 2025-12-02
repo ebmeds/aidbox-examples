@@ -43,7 +43,7 @@ export function QuestionnaireResponseEditor({
         onSubmit={(updatedQuestionnaireResponse) => {
           startTransition(async () => {
             try {
-              await onSubmitAction(updatedQuestionnaireResponse);
+              await onSaveAction(updatedQuestionnaireResponse);
               router.push(`/questionnaire-responses`);
             } catch (error) {
               console.error("Failed to submit questionnaire response:", error);

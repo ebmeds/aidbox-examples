@@ -41,6 +41,51 @@ async function extractEncounter(client: Client) {
 
   return encounter as Encounter;
 }
+// async function pushActivityDefinition(client: Client) {
+//   const result = await client.create({
+//   "meta": {
+//     "extension": [
+//       {
+//         "url": "https://aidbox.app/tenant-organization-id",
+//         "valueReference": {
+//           "reference": "Organization/ea3fa0c2dc1f062455ebab04b556b1e150150b03fa1bcbb821807bdfbf342c0a"
+//         }
+//       },
+//       {
+//         "url": "ex:createdAt",
+//         "valueInstant": "2025-11-26T15:53:47.948716Z"
+//       }
+//     ],
+//     "lastUpdated": "2025-11-26T15:53:47.948716Z",
+//   },
+//   "copyright": "Kustannus Oy Duodecim, 2025",
+//   "participant": [
+//     {
+//       "type": "patient"
+//     }
+//   ],
+//   "resourceType": "ActivityDefinition",
+//   "status": "active",
+//   "id": "7e3f19fd-0a11-4e73-8787-2a79b02802d0",
+//   "kind": "Task",
+//   "code": {
+//     "coding": [
+//       {
+//         "code": "ADB001-P4",
+//         "system": "http://91.202.112.142/codeserver/pages/classification-view-page.xhtml?classificationKey=2023&versionKey=2238",
+//         "display": "Hammaslääkärin päivystyksen palvelut - Voidaan siirtää virka-ajan lääkärille (2-3 vrk)"
+//       }
+//     ]
+//   }
+// }).then(res => {
+//     console.log('🚀 ~ pushActivityDefinition ~ res:', res)
+//   }).catch((e) => {
+//     console.error(`Failed to read encounter from launch context: ${e.message}`);
+//   });
+//   console.log('🚀 ~ pushActivityDefinition ~ result:', result)
+
+//   return;
+// }
 
 async function extractEverything(client: Client, patient: Patient) {
   const bundle = await client
@@ -133,7 +178,7 @@ async function extractFhirContext(client: Client) {
 
 export async function sync(client: Client) {
   const resources = [] as Resource[];
-
+  // await pushActivityDefinition(client);
   const patient = await extractPatient(client);
   if (patient) {
     resources.push(patient);

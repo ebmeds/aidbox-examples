@@ -18,6 +18,7 @@ export const SMART_LAUNCH_SCOPES = [
   "launch/patient",
   "patient/*.rs",
   "user/*.rs",
+  "user/ActivityDefinition.write",
 ];
 
 export const SMART_LAUNCH_CLIENT_ID = process.env.SMART_LAUNCH_CLIENT_ID ?? "aidbox-forms";
