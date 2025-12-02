@@ -45,7 +45,7 @@ export const AppSidebarMenuButtonProps = ({ questionnaire, onCreateResponseActio
             }
         }}
             key={questionnaire.title}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton className="cursor-pointer" asChild>
                 <p>  {questionnaire.title}            </p>
             </SidebarMenuButton>
         </SidebarMenuItem>
