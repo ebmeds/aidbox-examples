@@ -76,11 +76,10 @@ export function QuestionnaireResponseEditor({
                 </div>
                 <div className="flex-1 px-8 pt-6 pb-[2px] print:pb-8 print:flex-auto last:pb-8 last:rounded-b-[16px] @5xl/form:first:rounded-t-[16px]">
                     <p className="text-sm text-muted-foreground">
-                        {result.map((activityDefinition) => (
-                            <div key={`${activityDefinition.title}`} className="mb-4">
+                        {result.map((activityDefinition, index) => (
+                            <div key={`${activityDefinition.title}-${index}`} className="mb-4">
                                 <h4 className="font-semibold">{activityDefinition.title}</h4>
-                                {activityDefinition.topic?.map(t => <Markdown>{t.text}</Markdown>)}
-
+                                {activityDefinition.topic?.map((t, index) => <Markdown key={`markdown-${t.text}-${index}`}>{t.text}</Markdown>)}
                             </div>
                         ))}
                     </p>

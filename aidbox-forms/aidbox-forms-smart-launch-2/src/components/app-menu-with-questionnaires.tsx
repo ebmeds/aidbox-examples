@@ -116,11 +116,11 @@ export async function AppMenu() {
   return (
     <>
       {data.map((group, index) => (
-        <SidebarGroup key={index}>
+        <SidebarGroup key={`${group.label ?? 'unknown'}-${index}`}>
           {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
           <SidebarGroupContent>
             <SidebarMenu key={`${group.label ?? '' + index}`}>
-              {group.children.map(item => <AppSidebarMenuButtonProps onCreateResponseAction={createQuestionnaireResponse} questionnaire={item.questionnaire!} />)}
+              {group.children.map((item,index) => <AppSidebarMenuButtonProps key={`${item.questionnaire?.title}-${index}`} onCreateResponseAction={createQuestionnaireResponse} questionnaire={item.questionnaire!} />)}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
