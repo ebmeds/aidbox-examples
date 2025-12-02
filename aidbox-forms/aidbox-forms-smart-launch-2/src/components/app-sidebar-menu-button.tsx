@@ -21,7 +21,7 @@ export const AppSidebarMenuButtonProps = ({ questionnaire, onCreateResponseActio
     const router = useRouter();
     return <div className="rounded-xl border bg-card text-card-foreground shadow">
         <SidebarMenuItem onClick={async () => {
-            if (onCreateResponseAction) {
+            if (onCreateResponseAction && !running) {
                 try {
                     const { id } = await withRunning(
                         onCreateResponseAction(questionnaire),
