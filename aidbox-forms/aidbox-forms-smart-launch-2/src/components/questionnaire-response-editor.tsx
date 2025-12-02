@@ -21,7 +21,6 @@ export function QuestionnaireResponseEditor({
   questionnaire,
   questionnaireResponse,
   onSaveAction,
-  onSubmitAction,
 }: QuestionnaireResponseEditorProps) {
   const router = useRouter();
   const [, startTransition] = useTransition();

@@ -1,26 +1,13 @@
 "use server";
 
 import * as React from "react";
-import {
-  FileQuestion,
-  LayoutDashboard,
-  LucideIcon,
-  SquareMenu,
-} from "lucide-react";
 
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
+  SidebarMenu
 } from "@/components/ui/sidebar";
-import Link from "next/link";
-import { revalidatePath } from "next/cache";
 import { Questionnaire, QuestionnaireResponse, Parameters, Bundle } from "fhir/r4";
 import { getCurrentAidbox, getCurrentPatient, getCurrentUser } from "@/lib/server/smart";
 import { isDefined } from "@/lib/utils";

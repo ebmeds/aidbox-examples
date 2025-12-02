@@ -1,8 +1,7 @@
 import { getCurrentAidbox } from "@/lib/server/smart";
-import { ActivityDefinition, Questionnaire, QuestionnaireResponse } from "fhir/r4";
+import { Questionnaire, QuestionnaireResponse } from "fhir/r4";
 import { getFirst } from "@/lib/utils";
 import { QuestionnaireResponseEditor } from "@/components/focal-container";
-import Markdown from 'react-markdown'
 import got from "got";
 
 interface PageProps {
